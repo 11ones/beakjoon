@@ -1,0 +1,64 @@
+// 2022년 4월 19일 21:52:33
+// 틀렸습니다
+// KB
+// ms
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int compare(const void* a, const void* b)
+{
+	if (*(int*)a < *(int*)b)
+		return -1;
+	else if (*(int*)a > *(int*)b)
+		return 1;
+	else
+		return 0;
+}
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	int arr[500001];
+	for (int i = 0; i < n; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	qsort(arr, n, 4, compare);
+
+	int sum = arr[0], max = 0, pmax = 0;
+	int count = 0;
+	int check = 0;
+	for (int i = 1; i < n; i++)
+	{
+		if (arr[i] == arr[i - 1])
+			count++;
+		sum += arr[i];
+		if (i == n - 1 && count >= max && check<=1)
+		{
+			max = count;
+			pmax = i - 1;
+		}
+		else if ((count == max || max == 0) && (arr[i] != arr[i - 1]) && check <= 1)
+		{
+			max = count;
+			pmax = i - 1;
+			count = 0;
+			check++;
+		}
+		else if ((arr[i] != arr[i - 1]) && count > max)
+		{
+			max = count;
+			pmax = i - 1;
+			count = 0;
+			check = 0;
+		}
+		else if (arr[i] != arr[i - 1])
+			count = 0;
+		}
+	int m = round((double)sum / n);
+	if (m == -0)
+		m = 0;
+	printf("%d\n%d\n%d\n%d",m , arr[n / 2], arr[pmax], arr[n - 1] - arr[0]);
+}

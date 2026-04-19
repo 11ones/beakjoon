@@ -1,0 +1,6 @@
+// 2024년 12월 22일 17:46:01
+// 맞았습니다!!
+// 2020KB
+// 0ms
+#import<iostream>
+int main(){long c=0,n,i=1;std::cin>>n;for(;i*i<=n;i++){c+=n/i-i+1;}std::cout<<c;}

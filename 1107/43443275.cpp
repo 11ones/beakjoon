@@ -1,0 +1,135 @@
+// 2022년 5월 17일 22:12:28
+// 틀렸습니다
+// KB
+// ms
+#include <iostream>
+#include <string>
+#include <array>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	array <int, 10> power{ 1 };
+
+	for (int i{ 1 }; i < 10; i++)
+		power[i] = 10 * power[i - 1];
+
+	int target;
+	cin >> target;
+	int n;
+	cin >> n;
+	vector <int> broken;
+	for (int i = 0; i < n; i++)
+	{
+		int x;
+		cin >> x;
+		broken.push_back(x);
+	}
+	
+	int min;
+	if (target >= 100)
+		min = target - 100;
+	else
+		min = 100 - target;
+	int len = (int)log10(target) + 1;
+	if (broken.size() == 0)
+	{
+		if (target == 0)
+			min = 1;
+		else if (min > len - 1)
+			min = len - 1;
+	}
+	else
+	{
+		sort(broken.begin(), broken.end());
+		if (target == 0)
+		{
+			for (int i{ 0 }; i < 10; i++)
+			{
+				for (int j = 0; j < n; j++)
+				{
+					if (i == broken[j])
+						continue;
+				}
+				min = i + 1;
+				break;
+			}
+		}
+		else if (len == 1)
+		{
+			if (broken[0] != 0 && min > target + 1)
+				min = target + 1;
+			for (int i = 1; i <= power[len]; i++)
+			{
+				int ilen = (int)log10(i) + 1;
+				bool m = 0;
+				for (int k = 0; k < ilen; k++)
+				{
+					for (int j = 0; j < n; j++)
+					{
+						if (i / power[k] % 10 == broken[j])
+						{
+							m = 1;
+							break;
+						}
+					}
+					if (m)
+						break;
+				}
+				if (m)
+					continue;
+				int x1{ i - target };
+				if (x1 < 0)
+					x1 = -x1;
+
+				int x = x1 + ilen;
+				if (min > x)
+				{
+					min = x;
+				}
+			}
+		}
+		else
+		{
+			if (broken[0] != 0 && min > target + 1)
+				min = target + 1;
+			for (int i = power[len - 2]; i <= power[len]; i++)
+			{
+				int ilen = (int)log10(i) + 1;
+				bool m = 0;
+				for (int j = 0; j < n; j++)
+				{
+					for (int k = 0; k < ilen; k++)
+					{
+						if (i / power[k] % 10 == broken[j])
+						{
+							m = 1;
+							break;
+						}
+					}
+					if (m)
+						break;
+				}
+				if (m)
+					continue;
+				int x1{ i - target };
+				if (x1 < 0)
+					x1 = -x1;
+
+				int x = x1 + ilen;
+				if (min > x)
+				{
+					min = x;
+				}
+			}
+		}
+	}
+	cout << min;
+}

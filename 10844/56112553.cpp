@@ -1,0 +1,35 @@
+// 2023년 2월 19일 20:52:32
+// 맞았습니다!!
+// 2020KB
+// 0ms
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	int dp[101][10] = { {}, {0,1,1,1,1,1,1,1,1,1}, };
+
+	int n;
+	cin >> n;
+	for (int i = 2; i <= n; i++)
+	{
+		dp[i][0] = dp[i - 1][1];
+		dp[i][9] = dp[i - 1][8];
+		for (int j = 1; j < 9; j++)
+		{
+			dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j + 1])
+				% 1'000'000'000;
+		}
+	}
+
+	int sum = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		sum = (sum + dp[n][i]) % 1'000'000'000;
+	}
+	cout << sum;
+}

@@ -1,0 +1,36 @@
+// 2024년 9월 18일 16:32:43
+// 틀렸습니다
+// KB
+// ms
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  int n, k, c = 0;
+  cin >> n >> k;
+  vector<int> v(n);
+  queue<int> q;
+  for (int i = 0; i < n; i++) cin >> v[i];
+  for (int i = 0; i <= n - k; i++) {
+    if(q.front() + k <= i) {
+      q.pop();
+    }
+    if ((v[i] + q.size()) % 2) {
+      c++;
+      q.push(i);
+    }
+  }
+  int t = 0;
+  for(int i = n - k; i < n; i++) {
+    if(q.front() + k <= i) {
+      q.pop();
+    }
+    if ((v[i] + q.size()) % 2) {
+      t++;
+    }
+  }
+  cout << (t ? "Insomnia" : to_string(c));
+}

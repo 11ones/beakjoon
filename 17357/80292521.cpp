@@ -1,0 +1,35 @@
+// 2024년 6월 30일 15:15:47
+// 틀렸습니다
+// KB
+// ms
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+  int n;
+  cin >> n;
+  vector<int> v(n + 1), s(n + 1);
+  for (int i = n; i > 0; i--) {
+    cin >> v[i];
+  }
+  s[0] = 0;
+  for (int i = 1; i <= n; i++) {
+    s[i] = v[i] + s[i - 1];
+  }
+  for (int o = 1; o <= n; o++) {
+    int mx = 0, mxp;
+    for (int i = 1; i + o - 1 <= n; i++) {
+      double sum = 0;
+      double m = (double)(s[i + o - 1] - s[i - 1]) / o;
+      for (int j = 0; j < o; j++) {
+        sum += (v[i + j] - m) * (v[i + j] - m);
+      }
+      if (mx <= sum) {
+        mx = sum;
+        mxp = n - i - o + 2;
+      }
+    }
+    cout << mxp << '\n';
+  }
+}

@@ -1,0 +1,12 @@
+// 2022년 4월 26일 21:08:16
+// 맞았습니다!!
+// 1112KB
+// 0ms
+#include <stdio.h>
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	printf("%d", n / 5 + n / 25 + n / 125);
+}
